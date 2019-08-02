@@ -136,7 +136,7 @@ export class SubWallets {
         this.subWallets.set(publicKeys.publicSpendKey, subWallet);
     }
 
-    public initKeyImageMap() {
+    public initKeyImageMap(): void {
         for (const [publicKey, subWallet] of this.subWallets) {
             for (const keyImage of subWallet.getKeyImages()) {
                 this.keyImageOwners.set(keyImage, publicKey);
@@ -144,13 +144,13 @@ export class SubWallets {
         }
     }
 
-    public pruneSpentInputs(pruneHeight: number) {
+    public pruneSpentInputs(pruneHeight: number): void {
         for (const [publicKey, subWallet] of this.subWallets) {
             subWallet.pruneSpentInputs(pruneHeight);
         }
     }
 
-    public reset(scanHeight: number, scanTimestamp: number) {
+    public reset(scanHeight: number, scanTimestamp: number): void {
         this.transactions = [];
         this.lockedTransactions = [];
         this.transactionPrivateKeys = new Map();
@@ -159,6 +159,10 @@ export class SubWallets {
         for (const [publicKey, subWallet] of this.subWallets) {
             subWallet.reset(scanHeight, scanTimestamp);
         }
+    }
+
+    public rewind(scanHeight: number): void {
+        this.removeForkedTransactions(scanHeight);
     }
 
     /**
@@ -339,8 +343,16 @@ export class SubWallets {
             return tx.blockHeight >= forkHeight;
         });
 
+        let keyImagesToRemove: string[] = [];
+
         for (const [publicKey, subWallet] of this.subWallets) {
-            subWallet.removeForkedTransactions(forkHeight);
+            keyImagesToRemove = keyImagesToRemove.concat(subWallet.removeForkedTransactions(forkHeight));
+        }
+
+        if (!this.isViewWallet) {
+            for (const keyImage of keyImagesToRemove) {
+                this.keyImageOwners.delete(keyImage);
+            }
         }
     }
 

@@ -9,6 +9,59 @@ import { Block, TopBlock, DaemonConnection } from './Types';
  * Provides an interface to a daemon or similar, such as a blockchain cache
  */
 export interface IDaemon {
+
+    /**
+     * This is emitted whenever the interface fails to contact the underlying daemon.
+     * This event will only be emitted on the first disconnection. It will not
+     * be emitted again, until the daemon connects, and then disconnects again.
+     *
+     * Example:
+     *
+     * ```javascript
+     * daemon.on('disconnect', (error) => {
+     *     console.log('Possibly lost connection to daemon: ' + error.toString());
+     * });
+     * ```
+     *
+     * @event
+     */
+    on(event: 'disconnect', callback: (error: Error) => void): this;
+
+    /**
+     * This is emitted whenever the interface previously failed to contact the
+     * underlying daemon, and has now reconnected.
+     * This event will only be emitted on the first connection. It will not
+     * be emitted again, until the daemon disconnects, and then reconnects again.
+     *
+     * Example:
+     *
+     * ```javascript
+     * daemon.on('connect', () => {
+     *     console.log('Regained connection to daemon!');
+     * });
+     * ```
+     *
+     * @event
+     */
+    on(event: 'connect', callback: () => void): this;
+
+    /**
+     * This is emitted whenever either the localDaemonBlockCount or the networkDaemonBlockCount
+     * changes.
+     *
+     * Example:
+     *
+     * ```javascript
+     * daemon.on('heightchange', (localDaemonBlockCount, networkDaemonBlockCount) => {
+     *     console.log(localDaemonBlockCount, networkDaemonBlockCount);
+     * });
+     *
+     * @event
+     */
+    on(event: 'heightchange', 
+        callback: (localDaemonBlockCount: number, networkDaemonBlockCount: number) => void
+    ): this;
+
     /**
      * @param blockHashCheckpoints  Hashes of the last known blocks. Later
      *                              blocks (higher block height) should be

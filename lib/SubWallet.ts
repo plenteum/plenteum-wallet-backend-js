@@ -148,7 +148,7 @@ export class SubWallet {
         /* Remove all spent inputs that are older than 5000 blocks old.
            It is assumed the blockchain cannot fork more than this, and this
            frees up a lot of disk space with large, old wallets. */
-        this.spentInputs = this.spentInputs.filter((input) => input.spendHeight > pruneHeight);
+        _.remove(this.spentInputs, (input) => input.spendHeight > pruneHeight);
 
         const lenAfterPrune: number = this.spentInputs.length;
 
@@ -203,14 +203,20 @@ export class SubWallet {
                sent ourselves, that are now returning as change. Remove from
                vector if found. */
             _.remove(this.unconfirmedIncomingAmounts, (storedInput) => {
-                return storedInput.key !== input.key;
+                return storedInput.key === input.key;
             });
         }
 
         const existingInput = this.unspentInputs.find((x) => x.key === input.key);
 
         if (existingInput !== undefined) {
-            throw new Error(`Input ${input.key} was added to the wallet twice!`);
+            logger.log(
+                `Input ${input.key} was added to the wallet twice!`,
+                LogLevel.ERROR,
+                LogCategory.SYNC,
+            );
+
+            return;
         }
 
         this.unspentInputs.push(input);
@@ -233,7 +239,13 @@ export class SubWallet {
         }
 
         if (!removedInput) {
-            throw new Error('Could not find key image to remove!');
+            logger.log(
+                'Could not find key image to remove!',
+                LogLevel.ERROR,
+                LogCategory.SYNC,
+            );
+
+            return;
         }
 
         removedInput.spendHeight = spendHeight;
@@ -251,7 +263,13 @@ export class SubWallet {
         });
 
         if (!removedInput) {
-            throw new Error('Could not find key image to lock!');
+            logger.log(
+                'Could not find key image to lock!',
+                LogLevel.ERROR,
+                LogCategory.SYNC,
+            );
+
+            return;
         }
 
         /* Add to locked */
@@ -267,16 +285,13 @@ export class SubWallet {
            the locked inputs */
         const removed: TransactionInput[] = _.remove(this.lockedInputs, (input) => {
             return input.parentTransactionHash === transactionHash;
+        }).map((input) => {
+            input.spendHeight = 0;
+            return input;
         });
 
         /* Add them to the unspent vector */
-        this.unspentInputs = this.unspentInputs.concat(
-            /* Mark them as no longer spent */
-            removed.map((input) => {
-                input.spendHeight = 0;
-                return input;
-            }),
-        );
+        this.unspentInputs = this.unspentInputs.concat(removed);
 
         /* Remove unconfirmed amounts we used to correctly calculate incoming
            change */
@@ -288,29 +303,48 @@ export class SubWallet {
     /**
      * Remove transactions and inputs that occured after a fork height
      */
-    public removeForkedTransactions(forkHeight: number): void {
+    public removeForkedTransactions(forkHeight: number): string[] {
+        const lockedInputKeyImages = this.lockedInputs.map((input) => input.keyImage);
+
+        /* Both of these will get resolved by the wallet in time */
         this.lockedInputs = [];
         this.unconfirmedIncomingAmounts = [];
 
-        _.remove(this.unspentInputs, (input) => {
+        /* Remove unspent inputs which arrived after this height */
+        const removedUnspent = _.remove(this.unspentInputs, (input) => {
             return input.blockHeight >= forkHeight;
         });
 
-        /* unspent, formerly spent */
-        const unspent = _.remove(this.spentInputs, (input) => {
+        /* Remove spent inputs which arrived after this height */
+        const removedSpent = _.remove(this.spentInputs, (input) => {
             return input.blockHeight >= forkHeight;
         });
 
-        unspent.map((input) => input.spendHeight = 0);
+        /* This input arrived before the fork height, but was spent after the
+           fork height. So, we move them back into the unspent inputs vector. */
+        const nowUnspent = _.remove(this.spentInputs, (input) => {
+            return input.spendHeight >= forkHeight;
+        });
 
-        /* Add to unspent vector */
-        this.unspentInputs.concat(
-            /* Mark as no longer spent */
-            unspent.map((input) => {
-                input.spendHeight = 0;
-                return input;
-            }),
-        );
+        this.unspentInputs = this.unspentInputs.concat(nowUnspent.map((input) => { input.spendHeight = 0; return input }));
+
+        /* Could do this with concat+map.. but i think this is a little more
+           readable */
+        const keyImagesToRemove: string[] = [];
+
+        for (const keyImage of lockedInputKeyImages) {
+            keyImagesToRemove.push(keyImage);
+        }
+
+        for (const input of removedUnspent) {
+            keyImagesToRemove.push(input.keyImage);
+        }
+
+        for (const input of removedSpent) {
+            keyImagesToRemove.push(input.keyImage);
+        }
+
+        return keyImagesToRemove;
     }
 
     /**

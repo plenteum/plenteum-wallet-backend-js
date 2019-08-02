@@ -28,6 +28,18 @@ Yarn:
 
 `yarn add plenteum-wallet-backend`
 
+## Installation from GitHub
+
+If you need features which have not yet made it into a release yet, you can install from GitHub.
+
+NPM:
+
+`npm install https://github.com/plenteum/plenteum-wallet-backend-js --save`
+
+Yarn:
+
+`yarn add https://github.com/plenteum/plenteum-wallet-backend-js`
+
 ## Documentation
 
 [You can view the documentation here](https://plenteum.github.io/plenteum-wallet-backend-js/classes/_walletbackend_.walletbackend.html)
@@ -164,8 +176,41 @@ You can view available categories and log levels in the documentation.
 
 ## Changelog
 
-### v3.4.2
+### v3.4.9
 
+* Fix heightchange being emitted on topblock when there are still blocks remaining to be processed
+
+### v3.4.8
+
+* `on('heightchange')` is now emitted when `reset()`, `rewind()`, or `rescan()` is used.
+* `on('heightchange')` is now emitted when a top block is stored, fixing wallet height lagging behind network height.
+
+### v3.4.7
+
+* Fix issue with removeForkedTransactions, which also effected `rewind()`
+
+### v3.4.6
+
+* Add `rewind()`
+* Add `on('heightchange')` event
+* More improvements to keep-alive, max sockets, etc
+
+### v3.4.5
+
+* Fix bug causing balance from sent transaction to appear in both locked + unlocked balance
+
+### v3.4.4
+
+* Fix bug with how forked transactions were handled
+* Increase max sockets to use with request to fix timeouts in some environments
+* Fix bug where transactions to yourself had an incorrect amount when locked
+
+### v3.4.3
+
+* Add `on('disconnect')` and `on('connect')` events for daemon
+
+### v3.4.2
+* Update `plenteum-utils` dependency
 Start of changelog.
 
 ## Contributing

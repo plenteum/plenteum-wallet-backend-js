@@ -5,6 +5,8 @@
 import * as _ from 'lodash';
 const sizeof = require('object-sizeof');
 
+import { EventEmitter } from 'events';
+
 import { Config } from './Config';
 import { IDaemon } from './IDaemon';
 import { SubWallets } from './SubWallets';
@@ -23,7 +25,7 @@ import {
 /**
  * Decrypts blocks for our transactions and inputs
  */
-export class WalletSynchronizer {
+export class WalletSynchronizer extends EventEmitter {
 
     public static fromJSON(json: WalletSynchronizerJSON): WalletSynchronizer {
         const walletSynchronizer = Object.create(WalletSynchronizer.prototype);
@@ -97,6 +99,8 @@ export class WalletSynchronizer {
         startHeight: number,
         privateViewKey: string,
         config: Config) {
+
+        super();
 
         this.daemon = daemon;
         this.startTimestamp = startTimestamp;
@@ -216,7 +220,30 @@ export class WalletSynchronizer {
                 this.startHeight = scanHeight;
                 this.startTimestamp = scanTimestamp;
                 /* Discard sync status */
-                this.synchronizationStatus = new SynchronizationStatus();
+                this.synchronizationStatus = new SynchronizationStatus(scanHeight - 1);
+                this.storedBlocks = [];
+            };
+
+            if (this.fetchingBlocks) {
+                this.finishedFunc = () => {
+                    f();
+                    resolve();
+                    this.finishedFunc = undefined;
+                };
+            } else {
+                f();
+                resolve();
+            }
+        });
+    }
+
+    public rewind(scanHeight: number): Promise<void> {
+        return new Promise((resolve) => {
+            const f = () => {
+                this.startHeight = scanHeight;
+                this.startTimestamp = 0;
+                /* Discard sync status */
+                this.synchronizationStatus = new SynchronizationStatus(scanHeight - 1);
                 this.storedBlocks = [];
             };
 
@@ -409,14 +436,18 @@ export class WalletSynchronizer {
             return;
         }
 
-        /* Synced, store the top block so sync status displayes correctly if
-           we are not scanning coinbase tx only blocks */
         if (topBlock && blocks.length === 0) {
             if (this.finishedFunc) {
                 this.finishedFunc();
             }
 
             this.synchronizationStatus.storeBlockHash(topBlock.height, topBlock.hash);
+
+            /* Synced, store the top block so sync status displays correctly if
+               we are not scanning coinbase tx only blocks. */
+            if (this.storedBlocks.length === 0) {
+                this.emit('heightchange', topBlock.height);
+            }
 
             logger.log(
                 'Zero blocks received from daemon, fully synced',

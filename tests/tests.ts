@@ -497,6 +497,59 @@ function roundTrip(
        'swapNode works',
        'swapNode doesn\'t work!');
 
+    await tester.test(async () => {
+        const daemon2: IDaemon = new Daemon('this is not a valid host', 7777);
+
+        let success: boolean = false;
+
+        daemon2.on('disconnect', (err) => {
+            success = true;
+        });
+
+        await daemon2.init();
+
+        const daemon3: IDaemon = new Daemon('cache.pleapps.plenteum.com', 443);
+
+        daemon3.on('disconnect', (err) => {
+            success = false;
+        });
+
+        await daemon3.init();
+
+        return success;
+
+    }, 'Testing daemon events',
+       'Daemon events work',
+       'Daemon events don\'t work!');
+
+    await tester.test(async () => {
+        /* Load a test file to check compatibility with C++ wallet backend */
+        const [testWallet, error] = WalletBackend.openWalletFromFile(
+            daemon, './tests/test.wallet', 'password',
+        );
+
+        const wallet = testWallet as WalletBackend;
+
+        const a = wallet.getNumTransactions() === 3;
+
+        let [ unlockedBalance, lockedBalance ] = wallet.getBalance();
+
+        const c = unlockedBalance === 3000000000 && lockedBalance === 0;
+
+        await wallet.rewind(262444);
+
+        const b = wallet.getNumTransactions() === 2;
+
+        [ unlockedBalance, lockedBalance ] = wallet.getBalance();
+
+        const d = unlockedBalance === 2100000000 && lockedBalance === 0;
+
+        return a && b && c && d; 
+
+    }, 'Testing rewind',
+       'Rewind succeeded',
+       'Rewind failed');
+
     if (doPerformanceTests) {
         await tester.test(async () => {
             /* Reinit daemon so it has no leftover state */

@@ -175,6 +175,72 @@ export declare interface WalletBackend {
      * @event
      */
     on(event: 'desync', callback: (walletHeight: number, networkHeight: number) => void): this;
+
+    /**
+     * This is emitted whenever the wallet fails to contact the underlying daemon.
+     * This event will only be emitted on the first disconnection. It will not
+     * be emitted again, until the daemon connects, and then disconnects again.
+     *
+     * Example:
+     *
+     * ```javascript
+     * wallet.on('disconnect', (error) => {
+     *     console.log('Possibly lost connection to daemon: ' + error.toString());
+     * });
+     * ```
+     *
+     * Note that these events will only be emitted if using the Daemon daemon
+     * type, as the other daemon types are considered legacy and are not having
+     * new features added.
+     *
+     * @event
+     */
+    on(event: 'disconnect', callback: (error: Error) => void): this;
+
+    /**
+     * This is emitted whenever the wallet previously failed to contact the
+     * underlying daemon, and has now reconnected.
+     * This event will only be emitted on the first connection. It will not
+     * be emitted again, until the daemon disconnects, and then reconnects again.
+     *
+     * Example:
+     *
+     * ```javascript
+     * wallet.on('connect', () => {
+     *     console.log('Regained connection to daemon!');
+     * });
+     * ```
+     *
+     * Note that these events will only be emitted if using the Daemon daemon
+     * type, as the other daemon types are considered legacy and are not having
+     * new features added.
+     *
+     * @event
+     */
+    on(event: 'connect', callback: () => void): this;
+
+    /**
+     * This is emitted whenever the walletBlockCount (Amount of blocks the wallet has synced),
+     * localDaemonBlockCount (Amount of blocks the daemon you're connected to has synced),
+     * or networkBlockCount (Amount of blocks the network has) changes.
+     *
+     * This can be used in place of repeatedly polling [[getSyncStatus]]
+     *
+     * Example:
+     *
+     * ```javascript
+     * 
+     * wallet.on('heightchange', (walletBlockCount, localDaemonBlockCount, networkBlockCount) => {
+     *     console.log(`New sync status: ${walletBlockCount} / ${localDaemonBlockCount}`);
+     * });
+     * ```
+     *
+     * @event
+     */
+    on(event: 'heightchange', callback: (
+        walletBlockCount: number,
+        localDaemonBlockCount: number,
+        networkBlockCount: number) => void): this;
 }
 
 /**
@@ -700,12 +766,39 @@ export class WalletBackend extends EventEmitter {
             timestamp = getCurrentTimestampAdjusted(this.config.blockTargetTime);
         }
 
+        this.daemon = daemon;
+
         this.walletSynchronizer = new WalletSynchronizer(
             daemon, this.subWallets, timestamp, scanHeight,
             privateViewKey, this.config,
         );
 
-        this.daemon = daemon;
+        this.walletSynchronizer.on('heightchange', (walletHeight) => {
+            this.emit(
+                'heightchange',
+                walletHeight,
+                this.daemon.getLocalDaemonBlockCount(),
+                this.daemon.getNetworkBlockCount()
+            );
+        });
+
+        /* Passing through events from daemon to users */
+        this.daemon.on('disconnect', () => {
+            this.emit('disconnect');
+        });
+
+        this.daemon.on('connect', () => {
+            this.emit('connect');
+        });
+
+        this.daemon.on('heightchange', (localDaemonBlockCount, networkDaemonBlockCount) => {
+            this.emit(
+                'heightchange',
+                this.walletSynchronizer.getHeight(),
+                localDaemonBlockCount,
+                networkDaemonBlockCount,
+            );
+        });
 
         this.syncThread = new Metronome(
             () => this.sync(true),
@@ -741,7 +834,20 @@ export class WalletBackend extends EventEmitter {
 
         await this.stop();
 
+        /* Ensuring we don't double emit if same daemon instance is given */
+        if (this.daemon !== newDaemon) {
+            /* Passing through events from daemon to users */
+            newDaemon.on('disconnect', () => {
+                this.emit('disconnect');
+            });
+
+            newDaemon.on('connect', () => {
+                this.emit('connect');
+            });
+        }
+
         this.daemon = newDaemon;
+
         this.walletSynchronizer.swapNode(newDaemon);
 
         if (shouldRestart) {
@@ -824,6 +930,54 @@ export class WalletBackend extends EventEmitter {
         if (shouldRestart) {
             await this.start();
         }
+
+        this.emit(
+            'heightchange',
+            this.walletSynchronizer.getHeight(),
+            this.daemon.getLocalDaemonBlockCount(),
+            this.daemon.getNetworkBlockCount()
+        );
+    }
+
+    /**
+     * This function works similarly to both [[reset]] and [[rescan]].
+     *
+     * The difference is that while reset and rescan discard all progress before
+     * the specified height, and then continues syncing from there, rewind
+     * instead retains the information previous, and only removes information
+     * after the rewind height.
+     *
+     * This can be helpful if you suspect a transaction has been missed by
+     * the sync process, and want to only rescan a small section of blocks.
+     *
+     * Example:
+     * ```javascript
+     * await wallet.rewind(123456);
+     * ```
+     *
+     * @param scanHeight The scan height to rewind to 
+     */
+    public async rewind(scanHeight: number = 0): Promise<void> {
+        assertNumber(scanHeight, 'scanHeight');
+
+        const shouldRestart: boolean = this.started;
+
+        await this.stop();
+
+        await this.walletSynchronizer.rewind(scanHeight);
+
+        await this.subWallets.rewind(scanHeight);
+
+        if (shouldRestart) {
+            await this.start();
+        }
+
+        this.emit(
+            'heightchange',
+            this.walletSynchronizer.getHeight(),
+            this.daemon.getLocalDaemonBlockCount(),
+            this.daemon.getNetworkBlockCount()
+        );
     }
 
     /**
@@ -1845,7 +1999,7 @@ export class WalletBackend extends EventEmitter {
 
         if (blocks.length === 0) {
             if (sleep) {
-                await delay(1000);
+                await delay(this.config.daemonUpdateInterval);
             }
 
             return false;
@@ -1931,6 +2085,13 @@ export class WalletBackend extends EventEmitter {
                 LogLevel.DEBUG,
                 LogCategory.SYNC,
             );
+
+            this.emit(
+                'heightchange',
+                block.blockHeight, 
+                this.daemon.getLocalDaemonBlockCount(),
+                this.daemon.getNetworkBlockCount()
+            );
         }
 
         return true;
@@ -1978,7 +2139,34 @@ export class WalletBackend extends EventEmitter {
 
         this.daemon.updateConfig(config);
 
+        /* Passing through events from daemon to users */
+        this.daemon.on('disconnect', () => {
+            this.emit('disconnect');
+        });
+
+        this.daemon.on('connect', () => {
+            this.emit('connect');
+        });
+
+        this.daemon.on('heightchange', (localDaemonBlockCount, networkDaemonBlockCount) => {
+            this.emit(
+                'heightchange',
+                this.walletSynchronizer.getHeight(),
+                localDaemonBlockCount,
+                networkDaemonBlockCount,
+            );
+        });
+
         this.walletSynchronizer.initAfterLoad(this.subWallets, daemon, this.config);
+
+        this.walletSynchronizer.on('heightchange', (walletHeight) => {
+            this.emit(
+                'heightchange',
+                walletHeight,
+                this.daemon.getLocalDaemonBlockCount(),
+                this.daemon.getNetworkBlockCount()
+            );
+        });
 
         this.subWallets.initAfterLoad(this.config);
 
