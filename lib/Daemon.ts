@@ -80,9 +80,9 @@ export class Daemon implements IDaemon {
 
     /**
      * @param host The host to access the API on. Can be an IP, or a URL, for
-     *             example, 1.1.1.1, or blockapi.turtlepay.io
+     *             example, 1.1.1.1, or cache.pleapps.plenteum.com
      *
-     * @param port The port to access the API on. Normally 11898 for a TurtleCoin
+     * @param port The port to access the API on. Normally 44016 for a Plenteum
      *             daemon, 80 for a HTTP api, or 443 for a HTTPS api.
      *
      * @param isCacheApi You can optionally specify whether this API is a

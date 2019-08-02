@@ -1,18 +1,18 @@
-![image](https://user-images.githubusercontent.com/34389545/35821974-62e0e25c-0a70-11e8-87dd-2cfffeb6ed47.png)
+![logo_small_flat](https://user-images.githubusercontent.com/38456463/43392866-43c69cf4-93f5-11e8-81e2-3e3f81b6ca1d.png)
 
 #### Master Build Status
-[![Build Status](https://travis-ci.org/turtlecoin/turtlecoin-wallet-backend-js.svg?branch=master)](https://travis-ci.org/turtlecoin/turtlecoin-wallet-backend-js)
+[![Build Status](https://travis-ci.com/plenteum/plenteum-wallet-backend-js.svg?branch=master)](https://travis-ci.org/plenteum/plenteum-wallet-backend-js)
 
 #### NPM
-[![NPM](https://nodei.co/npm/turtlecoin-wallet-backend.png?compact=true)](https://npmjs.org/package/turtlecoin-wallet-backend)
+[![NPM](https://nodei.co/npm/plenteum-wallet-backend.png?compact=true)](https://npmjs.org/package/plenteum-wallet-backend)
 
 #### Github
 
-https://github.com/turtlecoin/turtlecoin-wallet-backend-js
+https://github.com/plenteum/plenteum-wallet-backend-js
 
-# turtlecoin-wallet-backend
+# plenteum-wallet-backend
 
-Provides an interface to the TurtleCoin network, allowing wallet applications to be built.
+Provides an interface to the Plenteum network, allowing wallet applications to be built.
 
 * Downloads blocks from the network, either through a traditional daemon, or a blockchain cache for increased speed
 * Processes blocks, decrypting transactions that belong to the user
@@ -22,32 +22,32 @@ Provides an interface to the TurtleCoin network, allowing wallet applications to
 
 NPM:
 
-`npm install turtlecoin-wallet-backend --save`
+`npm install plenteum-wallet-backend --save`
 
 Yarn:
 
-`yarn add turtlecoin-wallet-backend`
+`yarn add plenteum-wallet-backend`
 
 ## Documentation
 
-[You can view the documentation here](https://turtlecoin.github.io/turtlecoin-wallet-backend-js/classes/_walletbackend_.walletbackend.html)
+[You can view the documentation here](https://plenteum.github.io/plenteum-wallet-backend-js/classes/_walletbackend_.walletbackend.html)
 
 You can see a list of all the other classes on the right side of the screen.
-Note that you will need to prefix them all with `WB.` to access them, if you are not using typescript style imports, assuming you imported with `const WB = require('turtlecoin-wallet-backend')`.
+Note that you will need to prefix them all with `WB.` to access them, if you are not using typescript style imports, assuming you imported with `const WB = require('plenteum-wallet-backend')`.
 
 ## Quick Start
 
-You can find an [example project in the examples](https://github.com/turtlecoin/turtlecoin-wallet-backend-js/tree/master/examples/example1) folder.
+You can find an [example project in the examples](https://github.com/plenteum/plenteum-wallet-backend-js/tree/master/examples/example1) folder.
 
 ### Javascript
 
 ```javascript
-const WB = require('turtlecoin-wallet-backend');
+const WB = require('plenteum-wallet-backend');
 
 (async () => {
-    const daemon = new WB.Daemon('127.0.0.1', 11898);
+    const daemon = new WB.Daemon('127.0.0.1', 44016);
     /* OR
-    const daemon = new WB.Daemon('blockapi.turtlepay.io', 443);
+    const daemon = new WB.Daemon('cache.pleapps.plenteum.com', 443);
     */
     
     const wallet = WB.WalletBackend.createWallet(daemon);
@@ -58,7 +58,7 @@ const WB = require('turtlecoin-wallet-backend');
 
     console.log('Started wallet');
 
-    wallet.saveWalletToFile('mywallet.wallet', 'hunter2');
+    wallet.saveWalletToFile('mywallet.wallet', 'password');
 
     /* Make sure to call stop to let the node process exit */
     wallet.stop();
@@ -70,13 +70,13 @@ const WB = require('turtlecoin-wallet-backend');
 ### Typescript
 
 ```typescript
-import { WalletBackend, Daemon, IDaemon } from 'turtlecoin-wallet-backend';
+import { WalletBackend, Daemon, IDaemon } from 'plenteum-wallet-backend';
 
 (async () => {
-    const daemon: IDaemon = new Daemon('127.0.0.1', 11898);
+    const daemon: IDaemon = new Daemon('127.0.0.1', 44016);
 
     /* OR
-    const daemon: IDaemon = new Daemon('blockapi.turtlepay.io', 443);
+    const daemon: IDaemon = new Daemon('cache.pleapps.plenteum.com', 443);
     */
 
     const wallet: WalletBackend = WalletBackend.createWallet(daemon);
@@ -87,7 +87,7 @@ import { WalletBackend, Daemon, IDaemon } from 'turtlecoin-wallet-backend';
 
     console.log('Started wallet');
 
-    wallet.saveWalletToFile('mywallet.wallet', 'hunter2');
+    wallet.saveWalletToFile('mywallet.wallet', 'password');
 
     /* Make sure to call stop to let the node process exit */
     wallet.stop();
@@ -166,71 +166,15 @@ You can view available categories and log levels in the documentation.
 
 ### v3.4.2
 
-* Set keep-alive to true for `Daemon` and `BlockchainCacheApi`
-* Use IP regex instead of `net` module to allow working in non node environments
-
-### v3.4.1
-
-* Fix transactions being broken
-
-### v3.4.0
-
-* Add type assertions for JavaScript users
-* May possibly break your code if you were using implicit conversions to pass strings as numbers, etc
-* Fix bug where `cancelledTransactionsFailCount` was not correctly initialized when loading from file
-* Fix warning when using TLS with raw IP address
-* Known regression - Transactions are broken. Update to 3.4.1
-
-### v3.3.2
-
-* Migrate from node-fetch to request for `BlockchainCacheApi` as it works better in odd environments
-* Remove `maxBodyRequestSize` property as `abort-controller` significantly complicated code and didn't work in odd environments
-* Known regression - Transactions are broken. Update to 3.4.1
-
-### v3.3.1
-
-* Improve auto optimization
-* Update turtlecoin-utils dependency
-* Known regression - Transactions are broken. Update to 3.4.1
-
-### v3.3.0
-
-* Adds `swapNode()` method
-
-### v3.2.0
-
-* Adds `getDaemonConnectionInfo()` method
-* Removes compiled JavaScript from GitHub - GitHub install is no longer supported
-
-### v3.1.1
-
-* Fixes bug where wallet may not correctly halt after calling `stop()`.
-
-### v3.1.0
-
-* Adds `Daemon` class. This class supports Blockchain cache api's, conventional daemons, http and https, all automatically.
-* Marks `ConventionalDaemon` and `BlockchainCacheApi` as deprecated. These will be removed in v4.0.0. Please use the `Daemon` class instead.
-
-### v3.0.1
-
-* Fix issue where `reset()` would cause double wallet scanning.
-
-### v3.0.0
-
-* Fix bug where using multiple wallet instances with different configs would only use the latest config.
-* API change - You must now provide a config to the Utilities/ValidateParameters functions if you are using a non default config, for example if you are using the library for another cryptocurrency. Otherwise, the default TurtleCoin config will be used.
-
-### v2.0.0
-
 Start of changelog.
 
 ## Contributing
 
 ### Building (For Developers)
 
-`git clone https://github.com/turtlecoin/turtlecoin-wallet-backend-js.git`
+`git clone https://github.com/plenteum/plenteum-wallet-backend-js.git`
 
-`cd turtlecoin-wallet-backend`
+`cd plenteum-wallet-backend`
 
 `npm install -g yarn` (Skip this if you already have yarn installed)
 

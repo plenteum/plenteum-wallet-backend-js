@@ -130,7 +130,7 @@ export function isInputUnlocked(unlockTime: number, currentHeight: number): bool
 
 /**
  * Takes an amount in atomic units and pretty prints it.
- * Example: 12345607 -> 123,456.07 TRTL
+ * Example: 12345607 -> 123,456.07 PLE
  */
 export function prettyPrintAmount(amount: number, config: IConfig = new Config()): string {
     assertNumber(amount, 'amount');
@@ -143,7 +143,7 @@ export function prettyPrintAmount(amount: number, config: IConfig = new Config()
     const dollars: number = amount >= 0 ? Math.floor(amount / divisor) : Math.ceil(amount / divisor);
 
     /* Make sure 1 is displaced as 01 */
-    const cents: string = (Math.abs(amount % divisor)).toString().padStart(_config.decimalPlaces, '0');
+    const cents: string = (Math.abs(amount % divisor)).toString().padStart(_config.decimalPlaces, '0').substring(0, 2); //restrict display to 2 decimal places
 
     /* Makes our numbers thousand separated. https://stackoverflow.com/a/2901298/8737306 */
     const formatted: string = dollars.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

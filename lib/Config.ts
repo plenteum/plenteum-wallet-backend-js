@@ -11,14 +11,14 @@ import { MixinLimit, MixinLimits } from './MixinLimits';
  */
 export interface IConfig {
     /**
-     * The amount of decimal places your coin has, e.g. TurtleCoin has two
+     * The amount of decimal places your coin has, e.g. Plenteum has eight
      * decimals
      */
     decimalPlaces?: number;
 
     /**
      * The address prefix your coin uses - you can find this in CryptoNoteConfig.h.
-     * In TurtleCoin, this converts to TRTL
+     * In Plenteum, this converts to PLe
      */
     addressPrefix?: number;
 
@@ -55,7 +55,7 @@ export interface IConfig {
     blocksPerTick?: number;
 
     /**
-     * Your coins 'ticker', generally used to refer to the coin, i.e. 123 TRTL
+     * Your coins 'ticker', generally used to refer to the coin, i.e. 123 PLE
      */
     ticker?: string;
 
@@ -162,16 +162,16 @@ export interface IConfig {
  */
 export class Config implements IConfig {
     /**
-     * The amount of decimal places your coin has, e.g. TurtleCoin has two
+     * The amount of decimal places your coin has, e.g. Plenteum has eight
      * decimals
      */
-    public decimalPlaces: number = 2;
+    public decimalPlaces: number = 8;
 
     /**
      * The address prefix your coin uses - you can find this in CryptoNoteConfig.h.
-     * In TurtleCoin, this converts to TRTL
+     * In Plenteum, this converts to PLe
      */
-    public addressPrefix: number = 3914525;
+    public addressPrefix: number = 18181;
 
     /**
      * Request timeout for daemon operations in milliseconds
@@ -181,7 +181,7 @@ export class Config implements IConfig {
     /**
      * The block time of your coin, in seconds
      */
-    public blockTargetTime: number = 30;
+    public blockTargetTime: number = 120;
 
     /**
      * How often to process blocks, in millseconds
@@ -206,46 +206,40 @@ export class Config implements IConfig {
     public blocksPerTick: number = 1;
 
     /**
-     * Your coins 'ticker', generally used to refer to the coin, i.e. 123 TRTL
+     * Your coins 'ticker', generally used to refer to the coin, i.e. 123 PLE
      */
-    public ticker: string = 'TRTL';
+    public ticker: string = 'PLE';
 
     /**
      * Most people haven't mined any blocks, so lets not waste time scanning
      * them
      */
-    public scanCoinbaseTransactions: boolean = false;
+    public scanCoinbaseTransactions: boolean = true;
 
     /**
      * The minimum fee allowed for transactions, in ATOMIC units
      */
-    public minimumFee: number = 10;
+    public minimumFee: number = 0;
 
     /**
      * Mapping of height to mixin maximum and mixin minimum
      */
     public mixinLimits: MixinLimits = new MixinLimits([
         /* Height: 440,000, minMixin: 0, maxMixin: 100, defaultMixin: 3 */
-        new MixinLimit(440000, 0, 100, 3),
-
-        /* At height of 620000, static mixin of 7 */
-        new MixinLimit(620000, 7),
-
-        /* At height of 800000, static mixin of 3 */
-        new MixinLimit(800000, 3),
-    ], 3 /* Default mixin of 3 before block 440,000 */);
+        new MixinLimit(400000, 3, 7, 3),
+    ], 0 /* Default mixin of 0 before block 400,000 */);
 
     /**
      * The length of a standard address for your coin
      */
-    public standardAddressLength: number = 99;
+    public standardAddressLength: number = 98;
 
     /* The length of an integrated address for your coin - It's the same as
        a normal address, but there is a paymentID included in there - since
        payment ID's are 64 chars, and base58 encoding is done by encoding
        chunks of 8 chars at once into blocks of 11 chars, we can calculate
        this automatically */
-    public integratedAddressLength: number = 99 + ((64 * 11) / 8);
+    public integratedAddressLength: number = 98 + ((64 * 11) / 8);
 
     /**
      * A replacement function for the JS/C++ underivePublicKey.

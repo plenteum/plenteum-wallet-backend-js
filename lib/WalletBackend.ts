@@ -192,14 +192,14 @@ export class WalletBackend extends EventEmitter {
      * This method opens a password protected wallet from a filepath.
      * The password protection follows the same format as wallet-api,
      * zedwallet-beta, and WalletBackend. It does NOT follow the same format
-     * as turtle-service or zedwallet, and will be unable to open wallets
+     * as wallet-service or zedwallet, and will be unable to open wallets
      * created with this program.
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      *
      * const [wallet, error] = WB.WalletBackend.openWalletFromFile(daemon, 'mywallet.wallet', 'hunter2');
      *
@@ -238,14 +238,14 @@ export class WalletBackend extends EventEmitter {
      * This method opens a password protected wallet from an encrypted string.
      * The password protection follows the same format as wallet-api,
      * zedwallet-beta, and WalletBackend. It does NOT follow the same format
-     * as turtle-service or zedwallet, and will be unable to open wallets
+     * as wallet-service or zedwallet, and will be unable to open wallets
      * created with this program.
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      * const data = 'ENCRYPTED_WALLET_STRING';
      *
      * const [wallet, error] = WB.WalletBackend.openWalletFromEncryptedString(daemon, data, 'hunter2');
@@ -282,15 +282,15 @@ export class WalletBackend extends EventEmitter {
 
     /**
      * Loads a wallet from a JSON encoded string. For the correct format for
-     * the JSON to use, see https://github.com/turtlecoin/wallet-file-interaction
+     * the JSON to use, see https://github.com/plenteum/wallet-file-interaction
      *
      * You can obtain this JSON using [[toJSONString]].
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      *
      * const [wallet, err] = WB.WalletBackend.loadWalletFromJSON(daemon, json);
      *
@@ -327,9 +327,9 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      *
      * const seed = 'necklace went vials phone both haunted either eskimos ' +
      *              'dialect civilian western dabbing snout rustled balding ' +
@@ -392,9 +392,9 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      *
      * const privateViewKey = 'ce4c27d5b135dc5310669b35e53efc9d50d92438f00c76442adf8c85f73f1a01';
      * const privateSpendKey = 'f1b1e9a6f56241594ddabb243cdb39355a8b4a1a1c0343dde36f3b57835fe607';
@@ -468,13 +468,13 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      *
      * const privateViewKey = 'ce4c27d5b135dc5310669b35e53efc9d50d92438f00c76442adf8c85f73f1a01';
      *
-     * const address = 'TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4wW';
+     * const address = 'PLev2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4wW';
      *
      * const [wallet, err] = WB.WalletBackend.importViewWallet(daemon, 100000, privateViewKey, address);
      *
@@ -541,9 +541,9 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const WB = require('turtlecoin-wallet-backend');
+     * const WB = require('plenteum-wallet-backend');
      *
-     * const daemon = new WB.Daemon('127.0.0.1', 11898);
+     * const daemon = new WB.Daemon('127.0.0.1', 44016);
      *
      * const wallet = WB.WalletBackend.createWallet(daemon);
      * ```
@@ -730,7 +730,7 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const daemon = new WB.Daemon('blockapi.turtlepay.io', 443);
+     * const daemon = new WB.Daemon('cache.pleapps.plenteum.com', 443);
      * await wallet.swapNode(daemon);
      * const daemonInfo = wallet.getDaemonConnectionInfo();
      * console.log(`Connected to ${daemonInfo.ssl ? 'https://' : 'http://'}${daemonInfo.host}:${daemonInfo.port}`);
@@ -1094,7 +1094,7 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const [publicSpendKey, privateSpendKey, err] = wallet.getSpendKeys('TRTLxyz...');
+     * const [publicSpendKey, privateSpendKey, err] = wallet.getSpendKeys('PLexyz...');
      *
      * if (err) {
      *      console.log('Failed to get spend keys for address: ' + err.toString());
@@ -1164,7 +1164,7 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const [seed, err] = wallet.getMnemonicSeedForAddress('TRTLxyz...');
+     * const [seed, err] = wallet.getMnemonicSeedForAddress('PLexyz...');
      *
      * if (err) {
      *      console.log('Address does not belong to a deterministic wallet: ' + err.toString());
@@ -1394,7 +1394,7 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const [hash, err] = await wallet.sendFusionTransactionAdvanced(3, undefined, 'TRTLxyz..');
+     * const [hash, err] = await wallet.sendFusionTransactionAdvanced(3, undefined, 'PLexyz..');
      *
      * if (err) {
      *      console.log('Failed to send transaction: ' + err.toString());
@@ -1460,7 +1460,7 @@ export class WalletBackend extends EventEmitter {
      *
      * Example:
      * ```javascript
-     * const [hash, err] = await wallet.sendTransactionBasic('TRTLxyz...', 1234);
+     * const [hash, err] = await wallet.sendTransactionBasic('PLexyz...', 1234);
      *
      * if (err) {
      *      console.log('Failed to send transaction: ' + err.toString());
@@ -1524,8 +1524,8 @@ export class WalletBackend extends EventEmitter {
      * Example:
      * ```javascript
      * const destinations = [
-     *      ['TRTLxyz...', 1000],
-     *      ['TRTLzyx...', 10000],
+     *      ['PLexyz...', 1000],
+     *      ['PLezyx...', 10000],
      * ];
      *
      * const [hash, err] = await wallet.sendTransactionAdvanced(destinations, undefined, 100, 'c59d157d1d96f280ece0816a8925cae8232432b7235d1fa92c70faf3064434b3');

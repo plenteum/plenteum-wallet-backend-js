@@ -69,7 +69,7 @@ export class BlockchainCacheApi implements IDaemon {
      *
      * Example usage:
      * ```
-     * const daemon = new BlockchainCacheApi('blockapi.turtlepay.io', true);
+     * const daemon = new BlockchainCacheApi('cache.pleapps.plenteum.com', true);
      * ```
      */
     constructor(cacheBaseURL: string, ssl: boolean = true) {

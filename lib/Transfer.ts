@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import {
     CreatedTransaction, DecodedAddress, Output, RandomOutput, Transaction,
     TxDestination, Vout, Wallet,
-} from 'turtlecoin-utils';
+} from 'plenteum-utils';
 
 import { Config } from './Config';
 import { IDaemon } from './IDaemon';

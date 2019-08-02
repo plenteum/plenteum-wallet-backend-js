@@ -586,7 +586,7 @@ export class SubWallets {
 
         const inputsToUse: TxInputAndOwner[] = [];
 
-        /* See https://github.com/turtlecoin/turtlecoin/blob/153c08c3a046434522f7ac3ddd043037888b2bf5/src/CryptoNoteCore/Currency.cpp#L629 */
+        /* See https://github.com/plenteum/plenteum/blob/153c08c3a046434522f7ac3ddd043037888b2bf5/src/CryptoNoteCore/Currency.cpp#L629 */
         /* With 3 mixin == 314 bytes. */
         const inputSize = 1 + (6 + 2) + 32 + 64 + 1 + 4 + mixin * (4 + 64);
 

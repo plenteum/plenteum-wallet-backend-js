@@ -13,7 +13,7 @@ import { WalletError, WalletErrorCode } from './WalletError';
 import { assertString, assertNumber } from './Assert';
 
 /* REEEEE ADD TYPES */
-const TurtleCoind = require('turtlecoin-rpc').TurtleCoind;
+const Plenteumd = require('plenteum-rpc').Plenteumd;
 
 /**
  * @deprecated This Class will be removed in v4.0.0. Please update your code
@@ -33,7 +33,7 @@ export class ConventionalDaemon implements IDaemon {
     private readonly daemonPort: number;
 
     /**
-     * The turtlecoin-rpc connection
+     * The plenteum-rpc connection
      * Need to add types...
      */
     private readonly daemon: any;
@@ -84,7 +84,7 @@ export class ConventionalDaemon implements IDaemon {
         this.daemonHost = daemonHost;
         this.daemonPort = daemonPort;
 
-        this.daemon = new TurtleCoind({
+        this.daemon = new Plenteumd({
             host: daemonHost,
             port: daemonPort,
             ssl: false,

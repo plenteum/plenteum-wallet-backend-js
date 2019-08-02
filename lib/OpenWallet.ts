@@ -8,7 +8,7 @@ import { WalletEncryption } from './WalletEncryption';
 
 /**
  * Open the wallet from the given filename with the given password and return
- * a JSON string. Uses pbkdf2 encryption, not the same as turtle-service
+ * a JSON string. Uses pbkdf2 encryption, not the same as wallet-service
  *
  * Returns the JSON, and an error. If error is not undefined, the JSON will
  * be an empty string.

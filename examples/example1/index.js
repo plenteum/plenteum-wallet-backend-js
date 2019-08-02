@@ -1,4 +1,4 @@
-const WB = require('turtlecoin-wallet-backend');
+const WB = require('plenteum-wallet-backend');
 const readline = require('readline');
 const util = require('util');
 
@@ -27,8 +27,8 @@ function sleep(ms) {
     let wallet;
 
     /* Initialise our blockchain cache api. Can use a public node or local node
-       with `const daemon = new WB.Daemon('127.0.0.1', 11898);` */
-    const daemon = new WB.Daemon('blockapi.turtlepay.io', 443);
+       with `const daemon = new WB.Daemon('127.0.0.1', 44016);` */
+    const daemon = new WB.Daemon('cache.pleapps.plenteum.com', 443);
 
     if (response === 'c') {
         const newWallet = WB.WalletBackend.createWallet(daemon);
@@ -60,12 +60,12 @@ function sleep(ms) {
 
     const [unlockedBalance, lockedBalance] = wallet.getBalance();
 
-    if (unlockedBalance < 11) {
+    if (unlockedBalance < 11000000) {
         console.log('Not enough funds to send a transaction...');
     } else {
         console.log('Attempting to send a transaction');
 
-        const [hash, err] = await wallet.sendTransactionBasic('TRTLv2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4wW', 1);
+        const [hash, err] = await wallet.sendTransactionBasic('PLev2Fyavy8CXG8BPEbNeCHFZ1fuDCYCZ3vW5H5LXN4K2M2MHUpTENip9bbavpHvvPwb4NDkBWrNgURAd5DB38FHXWZyoBh4wW', 1000000);
 
         if (err) {
             console.log('Failed to send transaction: ' + err.toString());

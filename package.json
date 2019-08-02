@@ -1,5 +1,5 @@
 {
-  "name": "turtlecoin-wallet-backend",
+  "name": "plenteum-wallet-backend",
   "version": "3.4.2",
   "description": "",
   "main": "dist/lib/index.js",
@@ -22,8 +22,8 @@
     "lodash": "^4.17.14",
     "object-sizeof": "^1.4.0",
     "pbkdf2": "^3.0.17",
-    "turtlecoin-rpc": "^1.0.1",
-    "turtlecoin-utils": "^1.0.2"
+    "plenteum-rpc": "^1.0.3",
+    "plenteum-utils": "^1.0.5"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.136",
@@ -32,7 +32,7 @@
     "@types/request-promise-native": "^1.0.16",
     "colors": "^1.3.3",
     "tslint": "^5.18.0",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.15.0",
     "typedoc-plugin-no-inherit": "^1.1.9",
     "typescript": "^3.5.3"
   }
