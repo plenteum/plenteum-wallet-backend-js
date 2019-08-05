@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="default no-js">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MixinLimit | plenteum-wallet-backend</title>
+	<title>LogLevel | turtlecoin-wallet-backend</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">plenteum-wallet-backend</a>
+					<a href="../index.html" class="title">turtlecoin-wallet-backend</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,13 +52,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_mixinlimits_.html">&quot;MixinLimits&quot;</a>
+					<a href="../modules/_logger_.html">&quot;Logger&quot;</a>
 				</li>
 				<li>
-					<a href="_mixinlimits_.mixinlimit.html">MixinLimit</a>
+					<a href="_logger_.loglevel.html">LogLevel</a>
 				</li>
 			</ul>
-			<h1>Class MixinLimit</h1>
+			<h1>Enumeration LogLevel</h1>
 		</div>
 	</div>
 </header>
@@ -67,126 +67,77 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<dl class="tsd-comment-tags">
-						<dt>param</dt>
-						<dd><p>Height this mixin limit becomes active at</p>
-						</dd>
-						<dt>param</dt>
-						<dd><p>Minimum mixin allowed at this height</p>
-						</dd>
-						<dt>param</dt>
-						<dd><p>Maximum mixin allowed at this height</p>
-						</dd>
-						<dt>param</dt>
-						<dd><p>Default mixin to use at this height (should be in min/max bounds)</p>
-						</dd>
-					</dl>
+					<div class="lead">
+						<p>Levels to log at</p>
+					</div>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">MixinLimit</span>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_mixinlimits_.mixinlimit.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_mixinlimits_.mixinlimit.html#defaultmixin" class="tsd-kind-icon">default<wbr>Mixin</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_mixinlimits_.mixinlimit.html#height" class="tsd-kind-icon">height</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_mixinlimits_.mixinlimit.html#maxmixin" class="tsd-kind-icon">max<wbr>Mixin</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_mixinlimits_.mixinlimit.html#minmixin" class="tsd-kind-icon">min<wbr>Mixin</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_logger_.loglevel.html#debug" class="tsd-kind-icon">DEBUG</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_logger_.loglevel.html#disabled" class="tsd-kind-icon">DISABLED</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_logger_.loglevel.html#error" class="tsd-kind-icon">ERROR</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_logger_.loglevel.html#info" class="tsd-kind-icon">INFO</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="_logger_.loglevel.html#warning" class="tsd-kind-icon">WARNING</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Mixin<wbr>Limit<span class="tsd-signature-symbol">(</span>height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, minMixin<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, maxMixin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, defaultMixin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_mixinlimits_.mixinlimit.html" class="tsd-signature-type">MixinLimit</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/MixinLimits.ts#L17">MixinLimits.ts:17</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>height: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>minMixin: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> maxMixin: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> defaultMixin: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_mixinlimits_.mixinlimit.html" class="tsd-signature-type">MixinLimit</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="defaultmixin" class="tsd-anchor"></a>
-					<h3>default<wbr>Mixin</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Mixin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<h2>Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="debug" class="tsd-anchor"></a>
+					<h3>DEBUG</h3>
+					<div class="tsd-signature tsd-kind-icon">DEBUG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/MixinLimits.ts#L17">MixinLimits.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/Logger.ts#L104">Logger.ts:104</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="height" class="tsd-anchor"></a>
-					<h3>height</h3>
-					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="disabled" class="tsd-anchor"></a>
+					<h3>DISABLED</h3>
+					<div class="tsd-signature tsd-kind-icon">DISABLED<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;4</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/MixinLimits.ts#L14">MixinLimits.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/Logger.ts#L108">Logger.ts:108</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="maxmixin" class="tsd-anchor"></a>
-					<h3>max<wbr>Mixin</h3>
-					<div class="tsd-signature tsd-kind-icon">max<wbr>Mixin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="error" class="tsd-anchor"></a>
+					<h3>ERROR</h3>
+					<div class="tsd-signature tsd-kind-icon">ERROR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;3</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/MixinLimits.ts#L16">MixinLimits.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/Logger.ts#L107">Logger.ts:107</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="minmixin" class="tsd-anchor"></a>
-					<h3>min<wbr>Mixin</h3>
-					<div class="tsd-signature tsd-kind-icon">min<wbr>Mixin<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="info" class="tsd-anchor"></a>
+					<h3>INFO</h3>
+					<div class="tsd-signature tsd-kind-icon">INFO<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/MixinLimits.ts#L15">MixinLimits.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/Logger.ts#L105">Logger.ts:105</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="warning" class="tsd-anchor"></a>
+					<h3>WARNING</h3>
+					<div class="tsd-signature tsd-kind-icon">WARNING<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;2</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/turtlecoin/turtlecoin-wallet-backend-js/blob/c1340e5/lib/Logger.ts#L106">Logger.ts:106</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -213,10 +164,10 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_idaemon_.html">"IDaemon"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_logger_.html">"<wbr>Logger"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_mixinlimits_.html">"<wbr>Mixin<wbr>Limits"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -238,32 +189,35 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="_logger_.logcategory.html" class="tsd-kind-icon">Log<wbr>Category</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_mixinlimits_.mixinlimit.html" class="tsd-kind-icon">Mixin<wbr>Limit</a>
+					<li class="current tsd-kind-enum tsd-parent-kind-external-module">
+						<a href="_logger_.loglevel.html" class="tsd-kind-icon">Log<wbr>Level</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_mixinlimits_.mixinlimit.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_logger_.loglevel.html#debug" class="tsd-kind-icon">DEBUG</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_mixinlimits_.mixinlimit.html#defaultmixin" class="tsd-kind-icon">default<wbr>Mixin</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_logger_.loglevel.html#disabled" class="tsd-kind-icon">DISABLED</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_mixinlimits_.mixinlimit.html#height" class="tsd-kind-icon">height</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_logger_.loglevel.html#error" class="tsd-kind-icon">ERROR</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_mixinlimits_.mixinlimit.html#maxmixin" class="tsd-kind-icon">max<wbr>Mixin</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_logger_.loglevel.html#info" class="tsd-kind-icon">INFO</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_mixinlimits_.mixinlimit.html#minmixin" class="tsd-kind-icon">min<wbr>Mixin</a>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="_logger_.loglevel.html#warning" class="tsd-kind-icon">WARNING</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_mixinlimits_.mixinlimits.html" class="tsd-kind-icon">Mixin<wbr>Limits</a>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="../modules/_logger_.html#logger" class="tsd-kind-icon">logger</a>
 					</li>
 				</ul>
 			</nav>

@@ -23,6 +23,13 @@
   resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
   integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
 
+"@types/form-data@*":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@types/form-data/-/form-data-2.2.1.tgz#ee2b3b8eaa11c0938289953606b745b738c54b1e"
+  integrity sha512-JAMFhOaHIciYVh8fb5/83nmuO/AHwmto+Hq7a9y8FzLDcC1KCU344XDOMEmahnrTFlHjgh4L0WJFczNIX2GxnQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/lodash@^4.14.136":
   version "4.14.136"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
@@ -37,6 +44,11 @@
   version "12.6.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.9.tgz#ffeee23afdc19ab16e979338e7b536fdebbbaeaf"
   integrity sha512-+YB9FtyxXGyD54p8rXwWaN1EWEyar5L58GlGWgtH2I9rGmLGBQcw63+0jw+ujqVavNuO47S1ByAjm9zdHMnskw==
+
+"@types/node@^12.6.8":
+  version "12.6.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.6.8.tgz#e469b4bf9d1c9832aee4907ba8a051494357c12c"
+  integrity sha512-aX+gFgA5GHcDi89KG5keey2zf0WfZk/HAQotEamsK2kbey+8yGKcson0hbK8E+v0NArlCJQCqMP161YhV6ZXLg==
 
 "@types/pbkdf2@^3.0.0":
   version "3.0.0"
@@ -407,7 +419,12 @@ global@^4.2.1:
     min-document "^2.19.0"
     process "^0.11.10"
 
-graceful-fs@^4.1.6, graceful-fs@^4.2.0:
+graceful-fs@^4.1.6:
+  version "4.1.15"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
+  integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
+
+graceful-fs@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.0.tgz#8d8fdc73977cb04104721cb53666c1ca64cd328b"
   integrity sha512-jpSvDPV4Cq/bgtpndIWbI5hmYxhQGHPC4d4cqBPb4DLniCfhJokdXhwhaDuLBGLQdvvRum/UiX6ECVIPvDXqdg==
@@ -450,9 +467,9 @@ hash-base@^3.0.0:
     safe-buffer "^5.0.1"
 
 highlight.js@^9.15.8:
-  version "9.15.9"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.9.tgz#865257da1dbb4a58c4552d46c4b3854f77f0e6d5"
-  integrity sha512-M0zZvfLr5p0keDMCAhNBp03XJbKBxUx5AfyfufMdFMEP4N/Xj6dh0IqC75ys7BAzceR34NgcvXjupRVaHBPPVQ==
+  version "9.15.8"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.8.tgz#f344fda123f36f1a65490e932cf90569e4999971"
+  integrity sha512-RrapkKQWwE+wKdF73VsOa2RQdIoO3mxwJ4P8mhbI6KYJUraUHRKM5w5zQQKXNk0xNL4UVRdulV9SBJcmzJNzVA==
 
 http-signature@~1.2.0:
   version "1.2.0"
@@ -551,7 +568,12 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15:
+lodash@^4.17.11:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
+
+lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -685,35 +707,6 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
-
-plenteum-crypto@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/plenteum-crypto/-/plenteum-crypto-3.0.6.tgz#cef313f3a1accb1c5aaf86657988fbed43cb6ef1"
-  integrity sha512-/KAQp80s/rAS4G+qFT40On3zGyiLmBSmllMAIq0wMkUvynSTb+pGn2DWixgwHtdp9YbUy9VVZ1QG9EPFwaWYdA==
-  dependencies:
-    bindings "^1.5.0"
-    nan "^2.14.0"
-
-plenteum-rpc@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/plenteum-rpc/-/plenteum-rpc-1.0.3.tgz#9135d3d7ec18e5068dcf9babc2b368117114f7fc"
-  integrity sha512-IBjOLQ8p+fnNG4aImuAk1EzrYYa/Oz9rv96dtDWR7aZHvnd5tr+/nNXOKV9TyYWQntl7vTD8MPeYoIfRUXwyaA==
-  dependencies:
-    request "^2.88.0"
-    request-promise-native "^1.0.7"
-
-plenteum-utils@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/plenteum-utils/-/plenteum-utils-1.0.5.tgz#f302e5dad2911b7b93dfbe1b31694085c79b2449"
-  integrity sha512-PNtXmUmkIwrSVHnuJAFaRpkEXtxuCirNiKwVV/eC3rPhz3pXffowk3/Gq/iKKc8ScPRdm+LCd6ye28d/HgZ2AA==
-  dependencies:
-    crc "^3.8.0"
-    get-random-values "^1.2.0"
-    numeral "^2.0.6"
-    secure-random-string "^1.1.0"
-    varint "^5.0.0"
-  optionalDependencies:
-    plenteum-crypto "^3.0.6"
 
 process@^0.11.10:
   version "0.11.10"
@@ -936,6 +929,35 @@ tunnel-agent@^0.6.0:
   integrity sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0=
   dependencies:
     safe-buffer "^5.0.1"
+
+turtlecoin-crypto@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/turtlecoin-crypto/-/turtlecoin-crypto-3.0.4.tgz#8df1856bc79a86591e7e456c462205f5499d055e"
+  integrity sha512-wbRXc0XI4vdXxgan6P0vkEnY/EME0I1Y+xAlsIq4/fUi1VkRBdVN50J35LrkVAHAgz/D3J3k9OLvl+AbrKmyUA==
+  dependencies:
+    bindings "^1.5.0"
+    nan "^2.14.0"
+
+turtlecoin-rpc@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/turtlecoin-rpc/-/turtlecoin-rpc-1.0.1.tgz#d41a3ff904ed8437cf8f67b1c10fb9e27ae0b932"
+  integrity sha512-3U0FDbbM3+Es/Asd6QwQY/WWrVWknhyxEFfFuuBYd2KBncfqdQXoxzjLMGIOSSiCSl4PdFIxhxEaKY/EfQGKmw==
+  dependencies:
+    request "^2.88.0"
+    request-promise-native "^1.0.7"
+
+turtlecoin-utils@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/turtlecoin-utils/-/turtlecoin-utils-1.0.3.tgz#6eb98c11699281b73ff15bf51befdc9c143c7dad"
+  integrity sha512-QsEkbgE0FJ2RQUvoG4pXHtBVPpX9gfd53zQ0Dj3cME4lSnirZDpVOmGWnCrTIezZgraJdDXTPjJT7gSvuZthzQ==
+  dependencies:
+    crc "^3.8.0"
+    get-random-values "^1.2.0"
+    numeral "^2.0.6"
+    secure-random-string "^1.1.0"
+    varint "^5.0.0"
+  optionalDependencies:
+    turtlecoin-crypto "^3.0.4"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
