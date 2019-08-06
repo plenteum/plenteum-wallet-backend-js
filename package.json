@@ -24,7 +24,7 @@
     "object-sizeof": "^1.4.0",
     "pbkdf2": "^3.0.17",
     "plenteum-rpc": "^1.0.3",
-    "plenteum-utils": "^1.0.5"
+    "plenteum-utils": "^1.0.5",
     "typescript": "^3.5.3"
   },
   "devDependencies": {
