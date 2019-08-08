@@ -1,7 +1,7 @@
 ![logo_small_flat](https://user-images.githubusercontent.com/38456463/43392866-43c69cf4-93f5-11e8-81e2-3e3f81b6ca1d.png)
 
 #### Master Build Status
-[![Build Status](https://travis-ci.com/plenteum/plenteum-wallet-backend-js.svg?branch=master)](https://travis-ci.org/plenteum/plenteum-wallet-backend-js)
+[![Build Status](https://travis-ci.com/plenteum/plenteum-wallet-backend-js.svg?branch=master)](https://travis-ci.com/plenteum/plenteum-wallet-backend-js)
 
 #### NPM
 [![NPM](https://nodei.co/npm/plenteum-wallet-backend.png?compact=true)](https://npmjs.org/package/plenteum-wallet-backend)
@@ -175,6 +175,10 @@ In this example, we only print messages that fall into the SYNC category.
 You can view available categories and log levels in the documentation.
 
 ## Changelog
+
+### v3.5.0
+
+* Update dependency version for plenteum-utils
 
 ### v3.4.9
 
